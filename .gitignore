@@ -1,0 +1,16 @@
+*.iml
+.gradle/
+/local.properties
+/.idea/
+.DS_Store
+/build
+/captures
+.externalNativeBuild
+.cxx
+app/build/
+build/
+# Built artifacts live in dist/ next to the APK, but are not part of history.
+/dist/
+# The debug keystore IS committed on purpose: it must survive so future APKs can
+# update-install over earlier ones. See README "Updating later".
+!keystore/debug.keystore
