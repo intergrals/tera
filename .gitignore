@@ -14,3 +14,4 @@ build/
 # The debug keystore IS committed on purpose: it must survive so future APKs can
 # update-install over earlier ones. See README "Updating later".
 !keystore/debug.keystore
+.kotlin/
