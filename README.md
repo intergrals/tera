@@ -1,12 +1,12 @@
-# TERA — offline, YNAB-style budgeting for Android
+# TERA — offline envelope budgeting for Android
 
 TERA is a native Android envelope-budgeting app with **no network code at all**: no accounts,
 no sync, no analytics, and no permissions declared in the manifest. Everything lives in a local
 SQLite database on the phone.
 
-The budget model follows YNAB's method closely — Ready to Assign, envelope rollover, credit card
+The budget model is envelope budgeting: Ready to Assign, envelope rollover, credit card
 Payment categories with a real cash reserve, targets, Auto-Assign, Money Moves, reconciliation and
-the Reflect-style reports — while deliberately leaving out everything that needs the internet.
+the reporting suite — while deliberately leaving out everything that needs the internet.
 
 ---
 
@@ -24,7 +24,7 @@ the same file works on every phone.
 | File | `dist/TERA-debug.apk` (16.6 MB) |
 | Package | `com.tera.app` 1.0 (versionCode 1) |
 | SDK | min 26, target/compile 35 |
-| SHA-256 | `F3B983E756F448DF534FFE6F5CDB446C0AB6E0C390DD76DE902E4C764ED39319` |
+| SHA-256 | `9DE6CB55894604A9DCBCEF70653401570A5A5AB1D1760509200DEC03684C4CDB` |
 | Signed by | `keystore/debug.keystore` (same key as `dist/debug.keystore`) |
 
 **Permissions.** The app declares **no** `INTERNET` permission and holds no sensitive
@@ -96,7 +96,7 @@ never drift apart.
 
 - `Available = Assigned + Activity + Rollover in`
 - Positive Available rolls into the next month. When a month closes:
-  - **YNAB mode (default)** — cash overspending is subtracted from next month's Ready to Assign;
+  - **Deduct-from-next-month mode (default)** — cash overspending is subtracted from next month's Ready to Assign;
     card overspending rides as debt and leaves the Payment envelope underfunded.
   - **Carry-negative mode** — the negative Available carries forward as a red envelope instead.
 - Card reserve: `reserve = min(debt increase, funded portion of the category)`.
@@ -124,6 +124,9 @@ app/src/test/java/com/tera/app/    JVM unit tests for the engine, metrics, targe
 app/schemas/                               exported Room schema (migration baseline)
 keystore/debug.keystore                    the signing key — keep it
 ```
+
+If you are an AI agent (or a human picking this up cold), read **AGENTS.md** first: it records the
+engine invariants, the environment quirks of the original build machine, and the publishing flow.
 
 ## Build from source
 
@@ -163,7 +166,7 @@ distribution (Settings → Build Tools → Gradle → Use Gradle from: specified
 
 Split transactions, bank import, device sync, shared budgets, loan payoff calculators, widgets and
 notifications are not implemented. The app is single-device and single-budget. Credit-card handling
-treats each card's Payment category as described above; there is no separate "pre-YNAB debt" concept
+treats each card's Payment category as described above; there is no separate legacy-debt concept
 beyond the starting balance staying yellow until you fund it.
 
 ## Troubleshooting

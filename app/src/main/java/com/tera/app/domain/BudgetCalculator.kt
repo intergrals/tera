@@ -107,7 +107,7 @@ class BudgetCalculator {
                 rtaOverspentCarried = 0L
             } else {
                 rtaCarriedIn = previous.readyToAssignCents
-                rtaOverspentCarried = if (input.mode == OverspendMode.YNAB) {
+                rtaOverspentCarried = if (input.mode == OverspendMode.DEDUCT_FROM_NEXT_MONTH) {
                     previous.categories.values.sumOf { it.cashShortfallCents }
                 } else {
                     0L

@@ -177,7 +177,7 @@ object Fixtures {
         categories: List<Category> = categories(),
         transactions: List<Transaction> = emptyList(),
         allocations: Map<String, Map<Long, Long>> = emptyMap(),
-        mode: OverspendMode = OverspendMode.YNAB,
+        mode: OverspendMode = OverspendMode.DEDUCT_FROM_NEXT_MONTH,
         snoozed: Set<TargetKey> = emptySet(),
     ): BudgetInput = BudgetInput(
         accounts = accounts,

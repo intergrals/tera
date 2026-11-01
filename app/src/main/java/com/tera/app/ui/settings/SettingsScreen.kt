@@ -197,8 +197,8 @@ fun SettingsScreen(onBack: () -> Unit, onOpenDisclosure: () -> Unit) {
             Spacer(Modifier.height(8.dp))
             Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
                 FilterChip(
-                    selected = settings.overspendMode == OverspendMode.YNAB,
-                    onClick = { viewModel.setMode(OverspendMode.YNAB) },
+                    selected = settings.overspendMode == OverspendMode.DEDUCT_FROM_NEXT_MONTH,
+                    onClick = { viewModel.setMode(OverspendMode.DEDUCT_FROM_NEXT_MONTH) },
                     label = { Text("Deduct from next month") },
                 )
                 FilterChip(

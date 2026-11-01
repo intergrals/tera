@@ -66,7 +66,7 @@ data class BudgetUiState(
     val month: String = MonthKey.current(),
     val currentMonth: String = MonthKey.current(),
     val currency: String = "$",
-    val mode: OverspendMode = OverspendMode.YNAB,
+    val mode: OverspendMode = OverspendMode.DEDUCT_FROM_NEXT_MONTH,
     val loading: Boolean = true,
     val readyToAssignCents: Long = 0,
     val breakdown: RtaBreakdown? = null,

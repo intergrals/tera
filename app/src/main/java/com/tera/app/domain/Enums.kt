@@ -40,15 +40,15 @@ enum class TargetType {
 
 /** How overspending is resolved when the month rolls over. */
 enum class OverspendMode {
-    /** YNAB behaviour: cash shortfall hits next month's Ready to Assign, card shortfall rides as debt. */
-    YNAB,
+    /** Default: cash shortfall hits next month's Ready to Assign, card shortfall rides as debt. */
+    DEDUCT_FROM_NEXT_MONTH,
 
     /** Negative Available carries into next month as red; Ready to Assign is untouched. */
     CARRY_NEGATIVE;
 
     companion object {
         fun fromStorage(value: String?): OverspendMode =
-            entries.firstOrNull { it.name == value } ?: YNAB
+            entries.firstOrNull { it.name == value } ?: DEDUCT_FROM_NEXT_MONTH
     }
 }
 
@@ -62,7 +62,7 @@ enum class ClearanceState {
     }
 }
 
-/** Transaction flags, mirroring YNAB's colour flags. Ordinal is the stored value. */
+/** Transaction colour flags. The ordinal is the stored value. */
 enum class FlagColor {
     NONE,
     RED,

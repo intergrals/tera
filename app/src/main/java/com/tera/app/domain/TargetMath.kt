@@ -4,7 +4,7 @@ import java.time.YearMonth
 import java.time.temporal.ChronoUnit
 
 /**
- * Target ("goal") math. All three YNAB target types are supported:
+ * Target math. All three target types are supported:
  *
  * - NEEDED_FOR_SPENDING: top up to the amount, spread over the months remaining when a
  *   date is set (rounding up to the cent so you never fall short).
