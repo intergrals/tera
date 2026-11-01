@@ -21,10 +21,10 @@ the same file works on every phone.
 
 | | |
 |---|---|
-| File | `dist/TERA-debug.apk` (16.6 MB) |
-| Package | `com.tera.app` 1.0 (versionCode 1) |
+| File | `dist/TERA-debug.apk` (16.7 MB) |
+| Package | `com.tera.app` 1.1 (versionCode 2) |
 | SDK | min 26, target/compile 35 |
-| SHA-256 | `9DE6CB55894604A9DCBCEF70653401570A5A5AB1D1760509200DEC03684C4CDB` |
+| SHA-256 | `903C3A58DC0F630039C58E4AB0FE5C5E5437D5AB4DB0B1A557E6C5C9BA44AB91` |
 | Signed by | `keystore/debug.keystore` (same key as `dist/debug.keystore`) |
 
 **Permissions.** The app declares **no** `INTERNET` permission and holds no sensitive
@@ -49,6 +49,8 @@ this repository on purpose). If you build on another machine, copy the keystore 
   overspent last month.
 - TERA rows showing **Assigned / Activity / Available**, with group subtotals and a grand total.
 - **Auto-Assign**: underfunded, last month's assigned, last month's spending, 3-month average, reset.
+- **Envelope management**: create, rename, hide or delete groups and envelopes, set targets, from
+  More -> Envelopes (or the Budget menu).
 - **Money Moves** between any two envelopes (including card Payment envelopes) or back to Ready to
   Assign.
 - **Targets** on categories: Needed for Spending (optionally by a date), Savings Balance, Monthly

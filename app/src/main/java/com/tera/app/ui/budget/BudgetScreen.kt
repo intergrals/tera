@@ -78,6 +78,7 @@ import kotlinx.coroutines.launch
 fun BudgetScreen(
     onAddTransaction: () -> Unit,
     onOpenUpcoming: () -> Unit,
+    onOpenManageEnvelopes: () -> Unit,
 ) {
     val container = LocalAppContainer.current
     val viewModel: BudgetViewModel = viewModel(
@@ -91,6 +92,23 @@ fun BudgetScreen(
     var allocateTarget by remember { mutableStateOf<CategoryView?>(null) }
     var breakdownOpen by remember { mutableStateOf(false) }
     var collapsedGroups by remember { mutableStateOf(emptySet<Long>()) }
+
+    val paymentCategoryViews = state.payments.map { payment ->
+        CategoryView(
+            id = payment.paymentCategoryId,
+            name = "${payment.name} Payment",
+            note = "Reserved for the card bill",
+            assignedCents = payment.assignedCents,
+            activityCents = payment.activityCents,
+            availableCents = payment.availableCents,
+            hasTarget = false,
+            targetSuggestedCents = 0,
+            progress = null,
+            targetMet = false,
+            snoozed = false,
+        )
+    }
+
 
     LaunchedEffect(Unit) {
         viewModel.messages.collect { snackbar.showSnackbar(it) }
@@ -117,6 +135,14 @@ fun BudgetScreen(
                         Icon(Icons.Filled.MoreVert, contentDescription = "Budget actions")
                     }
                     DropdownMenu(expanded = menuOpen, onDismissRequest = { menuOpen = false }) {
+                        DropdownMenuItem(
+                            text = { Text("Manage envelopes") },
+                            onClick = {
+                                menuOpen = false
+                                onOpenManageEnvelopes()
+                            },
+                        )
+                        HorizontalDivider()
                         DropdownMenuItem(
                             text = { Text("Auto-assign: underfunded") },
                             onClick = {
@@ -188,8 +214,13 @@ fun BudgetScreen(
                 item {
                     EmptyState(
                         title = "No envelopes yet",
-                        body = "Add a category group from the Accounts tab, or restore a backup in Settings.",
+                        body = "Envelopes are where you give dollars a job. Create a group such as " +
+                            "Living, add envelopes inside it, then assign money to them.",
                     )
+                    TextButton(
+                        onClick = onOpenManageEnvelopes,
+                        modifier = Modifier.padding(horizontal = 24.dp),
+                    ) { Text("Set up envelopes") }
                 }
             }
             state.groups.forEach { group ->
@@ -221,7 +252,15 @@ fun BudgetScreen(
             if (state.payments.isNotEmpty()) {
                 item(key = "payments-header") { SectionHeader("Credit Card Payments") }
                 items(state.payments, key = { "card-${it.accountId}" }) { payment ->
-                    PaymentRow(payment = payment, currency = state.currency)
+                    PaymentRow(
+                        payment = payment,
+                        currency = state.currency,
+                        onClick = {
+                            allocateTarget = paymentCategoryViews.firstOrNull {
+                                it.id == payment.paymentCategoryId
+                            }
+                        },
+                    )
                 }
             }
             item {
@@ -277,21 +316,7 @@ fun BudgetScreen(
                 viewModel.moveMoney(category.id, targetCategoryId, cents)
                 allocateTarget = null
             },
-            destinations = state.groups.flatMap { it.categories } + state.payments.map {
-                CategoryView(
-                    id = it.paymentCategoryId,
-                    name = "${it.name} Payment",
-                    note = "",
-                    assignedCents = it.assignedCents,
-                    activityCents = it.activityCents,
-                    availableCents = it.availableCents,
-                    hasTarget = false,
-                    targetSuggestedCents = 0,
-                    progress = null,
-                    targetMet = false,
-                    snoozed = false,
-                )
-            },
+            destinations = state.groups.flatMap { it.categories } + paymentCategoryViews,
         )
     }
 
@@ -469,7 +494,7 @@ private fun CategoryRow(category: CategoryView, currency: String, onClick: () ->
 }
 
 @Composable
-private fun PaymentRow(payment: PaymentView, currency: String) {
+private fun PaymentRow(payment: PaymentView, currency: String, onClick: () -> Unit) {
     val colors = LocalTeraColors.current
     val (stateColor, stateLabel) = when (payment.state) {
         PaymentState.GREEN -> colors.positive to "Paid in full"
@@ -477,7 +502,10 @@ private fun PaymentRow(payment: PaymentView, currency: String) {
         PaymentState.RED -> colors.negative to "Overpaid"
     }
     Row(
-        modifier = Modifier.fillMaxWidth().padding(horizontal = 16.dp, vertical = 10.dp),
+        modifier = Modifier
+            .fillMaxWidth()
+            .clickable(onClick = onClick)
+            .padding(horizontal = 16.dp, vertical = 10.dp),
         verticalAlignment = Alignment.CenterVertically,
     ) {
         Column(modifier = Modifier.weight(2.1f)) {

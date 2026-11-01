@@ -30,6 +30,7 @@ import com.tera.app.ui.LocalAppContainer
 import com.tera.app.ui.accounts.AccountDetailScreen
 import com.tera.app.ui.accounts.AccountsScreen
 import com.tera.app.ui.budget.BudgetScreen
+import com.tera.app.ui.categories.ManageEnvelopesScreen
 import com.tera.app.ui.onboarding.OnboardingScreen
 import com.tera.app.ui.reports.ReflectScreen
 import com.tera.app.ui.scheduled.UpcomingScreen
@@ -54,6 +55,7 @@ object Routes {
     const val UPCOMING = "upcoming"
     const val SETTINGS = "settings"
     const val DISCLOSURE = "disclosure"
+    const val MANAGE_ENVELOPES = "manage-envelopes"
     const val ACCOUNT_DETAIL = "account/{accountId}"
     const val EDITOR = "editor?transactionId={transactionId}&accountId={accountId}"
 
@@ -118,6 +120,7 @@ private fun MainNavigation() {
                 BudgetScreen(
                     onAddTransaction = { navController.navigate(Routes.editor()) },
                     onOpenUpcoming = { navController.navigate(Routes.UPCOMING) },
+                    onOpenManageEnvelopes = { navController.navigate(Routes.MANAGE_ENVELOPES) },
                 )
             }
             composable(Routes.ACCOUNTS) {
@@ -131,6 +134,7 @@ private fun MainNavigation() {
             composable(Routes.MORE) {
                 MoreScreen(
                     onOpenUpcoming = { navController.navigate(Routes.UPCOMING) },
+                    onOpenEnvelopes = { navController.navigate(Routes.MANAGE_ENVELOPES) },
                     onOpenSettings = { navController.navigate(Routes.SETTINGS) },
                     onOpenDisclosure = { navController.navigate(Routes.DISCLOSURE) },
                 )
@@ -173,6 +177,9 @@ private fun MainNavigation() {
                     initialAccountId = accountId,
                     onBack = { navController.popBackStack() },
                 )
+            }
+            composable(Routes.MANAGE_ENVELOPES) {
+                ManageEnvelopesScreen(onBack = { navController.popBackStack() })
             }
             composable(Routes.UPCOMING) {
                 UpcomingScreen(onBack = { navController.popBackStack() })

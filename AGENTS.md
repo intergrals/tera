@@ -11,7 +11,7 @@ and **no `INTERNET` permission** (keep it that way). All state lives in a local 
 
 - Repo: https://github.com/intergrals/tera
 - App id / package: `com.tera.app` (namespace and `applicationId` are the same)
-- Version 1.0 (versionCode 1); release tag `v1.0` carries `TERA-debug.apk`
+- Version 1.1 (versionCode 2); release tag `v1.1` carries `TERA-debug.apk` (v1.0 is the first release)
 - `minSdk 26`, `targetSdk`/`compileSdk 35`, Java 17
 - Kotlin 2.0.21 · AGP 8.7.3 · Gradle 8.9 · Room 2.6.1 + KSP 2.0.21-1.0.28 · Compose BOM 2024.10.01
   (all pinned in `gradle/libs.versions.toml` — change versions there, nowhere else)
@@ -49,6 +49,7 @@ app/src/main/java/com/tera/app/
     BackupRepository.kt   JSON backup/restore (org.json, schemaVersion) + CSV export
     SettingsRepository.kt SharedPreferences (currency, overspend mode, onboarding)
   ui/                     Compose screens; each screen file owns its ViewModel
+    categories/           envelope management (groups, envelopes, targets, hide/delete)
   util/                   MoneyFormat (deterministic formatting/parsing), Dates
 app/src/test/java/com/tera/app/   JVM tests: engine, metrics, targets, money formatting
 tools/ (none yet)                 put one-off scripts in %TEMP%, not the repo
@@ -93,7 +94,7 @@ tools/ (none yet)                 put one-off scripts in %TEMP%, not the repo
 ## Build and test
 
 ```bash
-./gradlew test            # 48 JVM tests; must stay green
+./gradlew test            # 57 JVM tests; must stay green
 ./gradlew assembleDebug   # app/build/outputs/apk/debug/app-debug.apk
 ```
 

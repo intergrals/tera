@@ -12,6 +12,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.automirrored.filled.List
+import androidx.compose.material.icons.filled.Category
 import androidx.compose.material.icons.filled.Event
 import androidx.compose.material.icons.filled.Settings
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -32,11 +33,20 @@ import androidx.compose.ui.unit.dp
 @Composable
 fun MoreScreen(
     onOpenUpcoming: () -> Unit,
+    onOpenEnvelopes: () -> Unit,
     onOpenSettings: () -> Unit,
     onOpenDisclosure: () -> Unit,
 ) {
     Scaffold(topBar = { TopAppBar(title = { Text("More") }) }) { padding ->
         Column(modifier = Modifier.fillMaxSize().padding(padding)) {
+            ListItem(
+                headlineContent = { Text("Envelopes") },
+                supportingContent = { Text("Add, rename, hide, delete and set targets") },
+                leadingContent = { Icon(Icons.Filled.Category, contentDescription = null) },
+                modifier = Modifier.clickable(onClick = onOpenEnvelopes),
+                colors = ListItemDefaults.colors(containerColor = Color.Transparent),
+            )
+            HorizontalDivider()
             ListItem(
                 headlineContent = { Text("Upcoming transactions") },
                 supportingContent = { Text("Recurring bills and income") },
