@@ -20,5 +20,5 @@ dependencyResolutionManagement {
     }
 }
 
-rootProject.name = "Envelope"
+rootProject.name = "TERA"
 include(":app")

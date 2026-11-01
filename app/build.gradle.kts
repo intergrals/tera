@@ -6,11 +6,11 @@ plugins {
 }
 
 android {
-    namespace = "com.envelope.budget"
+    namespace = "com.tera.app"
     compileSdk = 35
 
     defaultConfig {
-        applicationId = "com.envelope.budget"
+        applicationId = "com.tera.app"
         minSdk = 26
         targetSdk = 35
         versionCode = 1

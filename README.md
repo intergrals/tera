@@ -1,6 +1,6 @@
-# Envelope — offline, YNAB-style budgeting for Android
+# TERA — offline, YNAB-style budgeting for Android
 
-Envelope is a native Android envelope-budgeting app with **no network code at all**: no accounts,
+TERA is a native Android envelope-budgeting app with **no network code at all**: no accounts,
 no sync, no analytics, and no permissions declared in the manifest. Everything lives in a local
 SQLite database on the phone.
 
@@ -12,19 +12,19 @@ the Reflect-style reports — while deliberately leaving out everything that nee
 
 ## Install (sideload)
 
-1. Copy `dist/Envelope-debug.apk` to your phone (USB, cloud drive, anything).
+1. Copy `dist/TERA-debug.apk` to your phone (USB, cloud drive, anything).
 2. Tap it. Android will ask to allow installs from that app — allow it once.
-3. Open **Envelope** and complete the short setup (currency, first account, starter envelopes).
+3. Open **TERA** and complete the short setup (currency, first account, starter envelopes).
 
 Requires Android 8.0 (API 26) or newer. The APK is universal: there are no native libraries, so
 the same file works on every phone.
 
 | | |
 |---|---|
-| File | `dist/Envelope-debug.apk` (16.6 MB) |
-| Package | `com.envelope.budget` 1.0 (versionCode 1) |
+| File | `dist/TERA-debug.apk` (16.6 MB) |
+| Package | `com.tera.app` 1.0 (versionCode 1) |
 | SDK | min 26, target/compile 35 |
-| SHA-256 | `ABE46A2D0EBDE02BB6D5BD45D31C743E5D2198449998A47F623AA244673AC8B3` |
+| SHA-256 | `F3B983E756F448DF534FFE6F5CDB446C0AB6E0C390DD76DE902E4C764ED39319` |
 | Signed by | `keystore/debug.keystore` (same key as `dist/debug.keystore`) |
 
 **Permissions.** The app declares **no** `INTERNET` permission and holds no sensitive
@@ -47,7 +47,7 @@ this repository on purpose). If you build on another machine, copy the keystore 
 ### Budget
 - **Ready to Assign** with a full breakdown: carried in, income, tracking transfers, assigned,
   overspent last month.
-- Envelope rows showing **Assigned / Activity / Available**, with group subtotals and a grand total.
+- TERA rows showing **Assigned / Activity / Available**, with group subtotals and a grand total.
 - **Auto-Assign**: underfunded, last month's assigned, last month's spending, 3-month average, reset.
 - **Money Moves** between any two envelopes (including card Payment envelopes) or back to Ready to
   Assign.
@@ -107,7 +107,7 @@ never drift apart.
 - **Days of Buffering** = positive budget-account balances ÷ average daily spending over 90 days
   (tracking accounts and negative card balances excluded).
 
-The in-app screen **More → How Envelope calculates things** repeats these definitions so the model's
+The in-app screen **More → How TERA calculates things** repeats these definitions so the model's
 limits are never hidden.
 
 ---
@@ -115,12 +115,12 @@ limits are never hidden.
 ## Project layout
 
 ```
-app/src/main/java/com/envelope/budget/
+app/src/main/java/com/tera/app/
   domain/      pure engine: BudgetCalculator, Metrics, TargetMath, TransferClassifier, models, enums
   data/        Room entities + DAOs, repository, backup, settings
   ui/          Compose screens (budget, accounts, editor, upcoming, reflect, settings, onboarding)
   util/        money formatting and ISO dates
-app/src/test/java/com/envelope/budget/    JVM unit tests for the engine, metrics, targets, formatting
+app/src/test/java/com/tera/app/    JVM unit tests for the engine, metrics, targets, formatting
 app/schemas/                               exported Room schema (migration baseline)
 keystore/debug.keystore                    the signing key — keep it
 ```
