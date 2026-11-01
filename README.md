@@ -19,6 +19,20 @@ the Reflect-style reports — while deliberately leaving out everything that nee
 Requires Android 8.0 (API 26) or newer. The APK is universal: there are no native libraries, so
 the same file works on every phone.
 
+| | |
+|---|---|
+| File | `dist/Envelope-debug.apk` (16.6 MB) |
+| Package | `com.envelope.budget` 1.0 (versionCode 1) |
+| SDK | min 26, target/compile 35 |
+| SHA-256 | `ABE46A2D0EBDE02BB6D5BD45D31C743E5D2198449998A47F623AA244673AC8B3` |
+| Signed by | `keystore/debug.keystore` (same key as `dist/debug.keystore`) |
+
+**Permissions.** The app declares **no** `INTERNET` permission and holds no sensitive
+permissions. The only entry in the manifest is `DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION`, a
+signature-level permission that AndroidX's own libraries define for themselves; it grants no
+capability. Everything the app does is local file I/O through the system file picker.
+
+
 ### Updating later
 
 `dist/debug.keystore` **is the signing key for this APK**. Any future build must be signed with it,
@@ -134,7 +148,7 @@ distribution (Settings → Build Tools → Gradle → Use Gradle from: specified
 
 ## Tests
 
-`./gradlew test` runs the JVM suite:
+`./gradlew test` runs the JVM suite (48 tests, all green on the build that produced this APK):
 
 - card reserve: funded purchases, payments, overpayment (red), carried debt, rewards balances,
   refunds, cashback, interest, balance transfers;
