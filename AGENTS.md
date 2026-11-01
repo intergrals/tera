@@ -103,10 +103,16 @@ Environment notes learned the hard way on the original build machine (Windows, D
   off (`org.gradle.vfs.watch=false`) — separate compiler daemons and the native watcher hang there.
 - Building inside a OneDrive-synced folder is extremely slow. Build a copy outside the sync root
   (`robocopy /MIR` to `%TEMP%\eprj`) and copy the APK back.
-- There is no `gh` CLI and git's credential helper is blocked in that sandbox. Auth for pushes uses an
-  ephemeral header: `git -c credential.helper= -c http.extraheader="AUTHORIZATION: basic <b64 of
-  x-access-token:TOKEN>"`. Never write tokens into `.git/config`; ask the user for a token and tell them
-  to revoke it afterwards.
+- There is no `gh` CLI, and Git Credential Manager (the system `credential.helper`) does not work inside
+  the sandbox. Pushes authenticate with a machine-local **SSH key**, never a token: `~/.ssh/id_ed25519`
+  (ED25519, no passphrase, ACL-restricted to the current user) with its public half registered on the
+  GitHub account. `~/.gitconfig` rewrites `https://github.com/intergrals/` to
+  `git@github.com:intergrals/`, so existing HTTPS remotes work unchanged, and sets
+  `core.sshCommand = C:/Windows/System32/OpenSSH/ssh.exe` — git's bundled MSYS ssh cannot create its
+  signal pipe under the sandbox (`Win32 error 5`), while the native OpenSSH client can. Verify with
+  `ssh -T git@github.com`; if it answers `Permission denied (publickey)`, the public key is missing from
+  the account, not broken locally. Never write tokens into `.git/config`, never paste one into a tracked
+  file, and never switch back to the ephemeral `http.extraheader` trick.
 - The signing key is project-local: `app/build.gradle.kts` points `signingConfigs.debug` at
   `rootProject.file("keystore/debug.keystore")` because the default `~/.android` location is outside
   the write sandbox on that machine.
